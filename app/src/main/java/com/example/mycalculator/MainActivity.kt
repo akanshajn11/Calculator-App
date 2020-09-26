@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var button7: Button
     private lateinit var button8: Button
     private lateinit var button9: Button
+    private lateinit var buttonPoint: Button
     private lateinit var textCalculation: TextView
 
 
@@ -34,12 +35,13 @@ class MainActivity : AppCompatActivity() {
         button7 = findViewById(R.id.button7)
         button8 = findViewById(R.id.button8)
         button9 = findViewById(R.id.button9)
+        buttonPoint = findViewById(R.id.button_point)
         textCalculation = findViewById(R.id.text_calculation)
 
         numberClick()
     }
 
-    fun numberClick() {
+    private fun numberClick() {
         button0.setOnClickListener() {
             textCalculation.text = textCalculation.text.toString() + button0.text
         }
@@ -78,6 +80,11 @@ class MainActivity : AppCompatActivity() {
 
         button9.setOnClickListener() {
             textCalculation.text = textCalculation.text.toString() + button9.text
+        }
+
+        buttonPoint.setOnClickListener() {
+            if (!textCalculation.text.toString().contains('.'))
+                textCalculation.text = textCalculation.text.toString() + buttonPoint.text
         }
     }
 }
