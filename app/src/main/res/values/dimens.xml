@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="button_textSize">25dp</dimen>
+    <dimen name="calculation_textSize">50dp</dimen>
+    <dimen name="text_topPadding">70dp</dimen>
 </resources>

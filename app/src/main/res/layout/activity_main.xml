@@ -5,9 +5,13 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/text_calculation"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3"></TextView>
+        android:layout_weight="3"
+        android:gravity="right"
+        android:paddingTop="@dimen/text_topPadding"
+        android:textSize="@dimen/calculation_textSize" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -56,6 +60,7 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/button7"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -64,6 +69,7 @@
             android:textSize="@dimen/button_textSize"></Button>
 
         <Button
+            android:id="@+id/button8"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -72,6 +78,7 @@
             android:textSize="@dimen/button_textSize"></Button>
 
         <Button
+            android:id="@+id/button9"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -96,6 +103,7 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/button4"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -104,6 +112,7 @@
             android:textSize="@dimen/button_textSize"></Button>
 
         <Button
+            android:id="@+id/button5"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -112,6 +121,7 @@
             android:textSize="@dimen/button_textSize"></Button>
 
         <Button
+            android:id="@+id/button6"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -136,6 +146,7 @@
         android:orientation="horizontal">
 
         <Button
+            android:id="@+id/button1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -144,6 +155,7 @@
             android:textSize="@dimen/button_textSize"></Button>
 
         <Button
+            android:id="@+id/button2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -152,6 +164,7 @@
             android:textSize="@dimen/button_textSize"></Button>
 
         <Button
+            android:id="@+id/button3"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -184,6 +197,7 @@
             android:textSize="@dimen/button_textSize"></Button>
 
         <Button
+            android:id="@+id/button0"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
