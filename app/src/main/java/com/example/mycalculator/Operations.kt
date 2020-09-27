@@ -16,6 +16,16 @@ class Operations {
             resultString= String.format("%.${decimalCount}f",result)
         }
 
+        if(operator=='-')
+        {
+            result = operand1 - operand2
+            if(getDecimal(operand1).toInt() > getDecimal(operand2).toInt())
+                decimalCount=getDecimal(operand1)
+            else
+                decimalCount=getDecimal(operand2)
+            resultString= String.format("%.${decimalCount}f",result)
+        }
+
         return resultString
     }
 
