@@ -19,19 +19,12 @@ class Operations {
 
 
     private fun getFormattedResult(operand1: Double, operand2: Double, result: Double): String {
-        var decimalCount: Number = 0
-        if (getDecimal(operand1).toInt() > getDecimal(operand2).toInt())
-            decimalCount = getDecimal(operand1)
-        else
-            decimalCount = getDecimal(operand2)
+        var decimalCount: Number = if (getDecimal(operand1).toInt() > getDecimal(operand2).toInt()) getDecimal(operand1) else getDecimal(operand2)
         return String.format("%.${decimalCount}f", result)
     }
 
     //To get number of digits after decimal
     private fun getDecimal(num: Double): Number {
-        var number = num.toString()
-        var index = number.indexOf(".")
-        var decNum = number.substring(index + 1)
-        return decNum.length
+        return num.toString().substring(num.toString().indexOf(".") + 1).length
     }
 }

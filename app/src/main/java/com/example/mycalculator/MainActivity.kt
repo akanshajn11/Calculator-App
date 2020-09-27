@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var buttonMinus: Button
     private lateinit var buttonMultiply: Button
     private lateinit var buttonDivide: Button
+    private lateinit var buttonAC: Button
 
     private lateinit var textCalculation: TextView
     private lateinit var textResult: TextView
@@ -55,6 +56,7 @@ class MainActivity : AppCompatActivity() {
         buttonMinus = findViewById(R.id.button_minus)
         buttonMultiply = findViewById(R.id.button_multiply)
         buttonDivide = findViewById(R.id.button_divide)
+        buttonAC = findViewById(R.id.button_AC)
         textCalculation = findViewById(R.id.text_calculation)
         textResult = findViewById(R.id.text_result)
 
@@ -64,6 +66,7 @@ class MainActivity : AppCompatActivity() {
         subtract() // add '-' operation
         multiply() // add 'x' operation
         divide()  // add '/' operation
+        allClear() //clear all text
         equals() // add '=' operation
     }
 
@@ -153,36 +156,48 @@ class MainActivity : AppCompatActivity() {
             addOperation(buttonDivide.text.toString(), '/')
         }
 
-}
-
-private fun addOperation(opText: String, op: Char) {
-
-    if (operand1 == null)
-        operand1 = currentNumber.toDouble()
-    else if (operand1 != null && operand2 == null && currentNumber != "") {
-        calculate()
     }
 
-    textCalculation.text = textCalculation.text.toString() + opText
-    currentNumber = ""
-    hasDecimal = false
-    operator = op
-}
-
-
-private fun equals() {
-    button_equals.setOnClickListener() {
-        calculate()
+    private fun allClear() {
+        buttonAC.setOnClickListener() {
+            textCalculation.text = ""
+            textResult.text = ""
+            operand1 = null
+            operand2 = null
+            operator = null
+            hasDecimal = false
+            currentNumber = ""
+        }
     }
-}
 
-private fun calculate() {
-    operand2 = currentNumber.toDouble()
-    var result: String = operations.calculate(operand1!!, operand2!!, operator!!)
-    textResult.text = result
-    operand1 = result.toDouble()
-    operand2 = null
-    currentNumber = ""
-}
+    private fun addOperation(opText: String, op: Char) {
+
+        if (operand1 == null)
+            operand1 = currentNumber.toDouble()
+        else if (operand1 != null && operand2 == null && currentNumber != "") {
+            calculate()
+        }
+
+        textCalculation.text = textCalculation.text.toString() + opText
+        currentNumber = ""
+        hasDecimal = false
+        operator = op
+    }
+
+
+    private fun equals() {
+        button_equals.setOnClickListener() {
+            calculate()
+        }
+    }
+
+    private fun calculate() {
+        operand2 = currentNumber.toDouble()
+        var result: String = operations.calculate(operand1!!, operand2!!, operator!!)
+        textResult.text = result
+        operand1 = result.toDouble()
+        operand2 = null
+        currentNumber = ""
+    }
 }
 
