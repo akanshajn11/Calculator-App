@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.text.isDigitsOnly
 import kotlinx.android.synthetic.main.activity_main.*
+import net.objecthunter.exp4j.ExpressionBuilder
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var buttonMultiply: Button
     private lateinit var buttonDivide: Button
     private lateinit var buttonAC: Button
+    private lateinit var buttonDelete: Button
 
     private lateinit var textCalculation: TextView
     private lateinit var textResult: TextView
@@ -33,9 +36,9 @@ class MainActivity : AppCompatActivity() {
     private var operand1: Double? = null
     private var operand2: Double? = null
     private var operator: Char? = null
-    private var hasDecimal: Boolean = false
     private var currentNumber: String = ""
-
+    private var dynamicResult: String = ""
+    private var opArray = mutableListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +60,7 @@ class MainActivity : AppCompatActivity() {
         buttonMultiply = findViewById(R.id.button_multiply)
         buttonDivide = findViewById(R.id.button_divide)
         buttonAC = findViewById(R.id.button_AC)
+        buttonDelete = findViewById(R.id.button_delete)
         textCalculation = findViewById(R.id.text_calculation)
         textResult = findViewById(R.id.text_result)
 
@@ -67,67 +71,66 @@ class MainActivity : AppCompatActivity() {
         multiply() // add 'x' operation
         divide()  // add '/' operation
         allClear() //clear all text
+        delete() // delete last character
         equals() // add '=' operation
     }
 
     private fun numberClick() {
         button0.setOnClickListener() {
             textCalculation.text = textCalculation.text.toString() + button0.text
-            currentNumber = currentNumber.plus(button0.text)
+            evaluateExpression(textCalculation.text.toString())
         }
 
         button1.setOnClickListener() {
             textCalculation.text = textCalculation.text.toString() + button1.text
-            currentNumber = currentNumber.plus(button1.text.toString())
+            evaluateExpression(textCalculation.text.toString())
         }
 
         button2.setOnClickListener() {
             textCalculation.text = textCalculation.text.toString() + button2.text
-            currentNumber = currentNumber.plus(button2.text)
+            evaluateExpression(textCalculation.text.toString())
         }
 
         button3.setOnClickListener() {
             textCalculation.text = textCalculation.text.toString() + button3.text
-            currentNumber = currentNumber.plus(button3.text)
+            evaluateExpression(textCalculation.text.toString())
         }
 
         button4.setOnClickListener() {
             textCalculation.text = textCalculation.text.toString() + button4.text
-            currentNumber = currentNumber.plus(button4.text)
+            evaluateExpression(textCalculation.text.toString())
         }
 
         button5.setOnClickListener() {
             textCalculation.text = textCalculation.text.toString() + button5.text
-            currentNumber = currentNumber.plus(button5.text)
+            evaluateExpression(textCalculation.text.toString())
         }
 
         button6.setOnClickListener() {
             textCalculation.text = textCalculation.text.toString() + button6.text
-            currentNumber = currentNumber.plus(button6.text)
+            evaluateExpression(textCalculation.text.toString())
         }
 
         button7.setOnClickListener() {
             textCalculation.text = textCalculation.text.toString() + button7.text
-            currentNumber = currentNumber.plus(button7.text)
+            evaluateExpression(textCalculation.text.toString())
         }
 
         button8.setOnClickListener() {
             textCalculation.text = textCalculation.text.toString() + button8.text
-            currentNumber = currentNumber.plus(button8.text)
+            evaluateExpression(textCalculation.text.toString())
         }
 
         button9.setOnClickListener() {
             textCalculation.text = textCalculation.text.toString() + button9.text
-            currentNumber = currentNumber.plus(button9.text)
+            evaluateExpression(textCalculation.text.toString())
         }
     }
 
     private fun decimal() {
         buttonPoint.setOnClickListener() {
-            if (!hasDecimal) {
+            if (!operations.hasDecimal(textCalculation.text.toString(), opArray)) {
                 textCalculation.text = textCalculation.text.toString() + buttonPoint.text
-                currentNumber = currentNumber.plus(buttonPoint.text)
-                hasDecimal = true
             }
         }
     }
@@ -135,27 +138,29 @@ class MainActivity : AppCompatActivity() {
     private fun add() {
         buttonPlus.setOnClickListener() {
             addOperation(buttonPlus.text.toString(), '+')
+            opArray.add(buttonPlus.text.toString())
         }
     }
 
     private fun subtract() {
         buttonMinus.setOnClickListener() {
             addOperation(buttonMinus.text.toString(), '-')
+            opArray.add(buttonMinus.text.toString())
         }
     }
 
     private fun multiply() {
-        var test = buttonMultiply.text.toString()
         buttonMultiply.setOnClickListener() {
-            addOperation(buttonMultiply.text.toString(), 'x')
+            addOperation("*", '*')
+            opArray.add("*")
         }
     }
 
     private fun divide() {
         buttonDivide.setOnClickListener() {
             addOperation(buttonDivide.text.toString(), '/')
+            opArray.add(buttonDivide.text.toString())
         }
-
     }
 
     private fun allClear() {
@@ -165,39 +170,53 @@ class MainActivity : AppCompatActivity() {
             operand1 = null
             operand2 = null
             operator = null
-            hasDecimal = false
             currentNumber = ""
+            dynamicResult = ""
+        }
+    }
+
+    private fun delete() {
+        buttonDelete.setOnClickListener() {
+            var lastChar = textCalculation.text.toString()
+                .substring(textCalculation.text.toString().length - 1)
+            textCalculation.text = textCalculation.text.toString()
+                .substring(0, textCalculation.text.toString().length - 1)
+
+            evaluateExpression(textCalculation.text.toString())
+
+            when (lastChar) {
+                in listOf<String>("+", "-", "*", "/") -> opArray.removeLast()
+            }
         }
     }
 
     private fun addOperation(opText: String, op: Char) {
-
-        if (operand1 == null)
-            operand1 = currentNumber.toDouble()
-        else if (operand1 != null && operand2 == null && currentNumber != "") {
-            calculate()
-        }
-
-        textCalculation.text = textCalculation.text.toString() + opText
-        currentNumber = ""
-        hasDecimal = false
         operator = op
+        textCalculation.text = textCalculation.text.toString() + opText
     }
 
+    private fun evaluateExpression(exp: String) {
+
+        if (exp.isNullOrEmpty())
+            textResult.text = ""
+        else {
+            var expr: String = if (!(exp.last().isDigit()))
+                exp.substring(0, exp.length - 1)
+            else
+                exp
+            val eval = ExpressionBuilder(expr).build()
+            val res = eval.evaluate()
+            val resInt: Number
+            resInt = operations.getInteger(res)
+            if (operator != null)
+                textResult.text = resInt.toString()
+        }
+    }
 
     private fun equals() {
         button_equals.setOnClickListener() {
-            calculate()
+            evaluateExpression(textCalculation.text.toString())
         }
-    }
-
-    private fun calculate() {
-        operand2 = currentNumber.toDouble()
-        var result: String = operations.calculate(operand1!!, operand2!!, operator!!)
-        textResult.text = result
-        operand1 = result.toDouble()
-        operand2 = null
-        currentNumber = ""
     }
 }
 
