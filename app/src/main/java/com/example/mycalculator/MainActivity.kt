@@ -206,10 +206,10 @@ class MainActivity : AppCompatActivity() {
                 exp
             val eval = ExpressionBuilder(expr).build()
             val res = eval.evaluate()
-            val resInt: Number
-            resInt = operations.getInteger(res)
+            val resFormatted: Number
+            resFormatted = operations.getFormattedResult(res)
             if (operator != null)
-                textResult.text = resInt.toString()
+                textResult.text = resFormatted.toString()
         }
     }
 
