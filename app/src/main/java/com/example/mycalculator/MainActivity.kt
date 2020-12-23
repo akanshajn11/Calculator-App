@@ -151,8 +151,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun multiply() {
         buttonMultiply.setOnClickListener() {
-            addOperation("*", '*')
-            opArray.add("*")
+            addOperation(buttonMultiply.text.toString(), '*')
+            opArray.add(buttonMultiply.text.toString())
         }
     }
 
@@ -204,6 +204,8 @@ class MainActivity : AppCompatActivity() {
                 exp.substring(0, exp.length - 1)
             else
                 exp
+            if (expr.contains("x"))
+                expr = expr.replace("x", "*", ignoreCase = false)
             val eval = ExpressionBuilder(expr).build()
             val res = eval.evaluate()
             val resFormatted: Number
