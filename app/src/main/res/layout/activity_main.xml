@@ -223,6 +223,7 @@
             android:textSize="@dimen/button_textSize"></Button>
 
         <Button
+            android:id="@+id/button_braces"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
