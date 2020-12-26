@@ -33,7 +33,7 @@
             android:id="@+id/button_AC"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:background="@color/button_color"
             android:text="@string/allClear"
             android:textSize="@dimen/button_textSize"></Button>
@@ -47,13 +47,6 @@
             android:text="@string/delete"
             android:textSize="@dimen/button_textSize"></Button>
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@color/button_color"
-            android:text="@string/percentage"
-            android:textSize="@dimen/button_textSize"></Button>
 
         <Button
             android:id="@+id/button_divide"

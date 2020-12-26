@@ -78,8 +78,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun numberClick() {
         button0.setOnClickListener() {
-            textCalculation.text = textCalculation.text.toString() + button0.text
-            textResult.text = operations.evaluateExpression(textCalculation.text.toString())
+            if (textCalculation.text.toString().last() != '/') // to avoid division by 0
+            {
+                textCalculation.text = textCalculation.text.toString() + button0.text
+                textResult.text = operations.evaluateExpression(textCalculation.text.toString())
+            }
         }
 
         button1.setOnClickListener() {
