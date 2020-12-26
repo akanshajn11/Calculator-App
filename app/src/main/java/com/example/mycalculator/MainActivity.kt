@@ -78,7 +78,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun numberClick() {
         button0.setOnClickListener() {
-            if (textCalculation.text.toString().last() != '/') // to avoid division by 0
+            if (textCalculation.text.toString().isNullOrEmpty() || (!textCalculation.text.toString()
+                    .isNullOrEmpty() && textCalculation.text.toString().last() != '/')
+            ) // to avoid division by 0
             {
                 textCalculation.text = textCalculation.text.toString() + button0.text
                 textResult.text = operations.evaluateExpression(textCalculation.text.toString())
@@ -129,13 +131,10 @@ class MainActivity : AppCompatActivity() {
             textCalculation.text = textCalculation.text.toString() + button9.text
             textResult.text = operations.evaluateExpression(textCalculation.text.toString())
         }
-
-
     }
 
     private fun decimal() {
         buttonPoint.setOnClickListener() {
-
             if (operations.isValidDecimal(textCalculation.text.toString(), opArray))
                 textCalculation.text = textCalculation.text.toString() + buttonPoint.text
         }
@@ -187,7 +186,11 @@ class MainActivity : AppCompatActivity() {
 
             when (textCalculation.text.toString()
                 .substring(textCalculation.text.toString().length - 1)) {
-                in listOf<String>("+", "-", "*", "/") -> opArray.removeLast()
+                in listOf("+", "-", "*", "/") -> opArray.removeLast()
+                in listOf("(", ")") -> lastBracket = operations.getLastBracket(
+                    textCalculation.text.toString()
+                        .substring(0, textCalculation.text.toString().length - 1)
+                )
             }
             textCalculation.text = textCalculation.text.toString()
                 .substring(0, textCalculation.text.toString().length - 1)

@@ -36,13 +36,13 @@ class Operations {
                 continue
             }
 
-            if (x == '.') {
+            if (x == '.')
                 return expr.substring(0, expr.length - 1)
-            }
 
-            if (x.toInt() > 0) {
+
+            if (x.toInt() > 0)
                 return expr
-            }
+
 
         }
         return expr
@@ -182,7 +182,6 @@ class Operations {
                 ")" -> arrayOf(expr.plus("("), "(")
                 else -> arrayOf(expr.plus("("), "(")
             }
-
         }
 
         if (expr.last() == '.')
@@ -194,9 +193,7 @@ class Operations {
                 ")" -> arrayOf(expr.plus("("), "(")
                 else -> arrayOf(expr.plus("("), "(")
             }
-
         }
-
         return arrayOf(expr, lastBracket)
     }
 
@@ -258,6 +255,28 @@ class Operations {
 
         return false
 
+    }
+
+    fun getLastBracket(exp: String): String {
+        if (exp.isNullOrEmpty())
+            return ""
+
+        var lastindexO: Int = -1
+        var lastIndexC: Int = -1
+
+        if (exp.any { it == '(' })
+            lastindexO = exp.lastIndexOf('(')
+
+        if (exp.any { it == ')' })
+            lastIndexC = exp.lastIndexOf(')')
+
+        if (lastIndexC > lastindexO)
+            return ")"
+
+        if (lastindexO > lastIndexC)
+            return "("
+
+        return ""
     }
 }
 
